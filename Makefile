@@ -39,14 +39,6 @@ PURPLE		:=	\033[1;35m
 PERCENT				:=	0
 NB_COMPIL			:=	0
 TOTAL_COMPIL		:=	$(words $(OBJS))
-#NB_COMPIL		:=	0
-
-#ifndef	RECURSIVE
-#TOTAL_COMPIL	:=	$(shell expr $$(make -n RECURSIVE=1 | grep Compiling | wc -l) - 1)
-#endif
-#ifndef TOTAL_COMPIL
-#TOTAL_COMPIL	:=	$(words $(OBJS))
-#endif
 
 #=====================================RULES====================================#
 all: $(BIN_DIR)/$(NAME)
@@ -115,4 +107,4 @@ build-windows :
 	@cp SDL2/bin/SDL2_ttf.dll build_windows/bin/SDL2_ttf.dll
 	@echo "$(GREEN)Done$(NOC)"
 
-.PHONY: clean fclean re run
+.PHONY: clean fclean re run build-linux build-windows
