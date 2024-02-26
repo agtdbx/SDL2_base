@@ -76,7 +76,11 @@ run: $(BIN_DIR)/$(NAME)
 	@cd $(BIN_DIR); ./$(NAME)
 	@echo "$(GREEN)Have a nice day :)$(NOC)"
 
-build-linux :
+config:
+	mkdir -p SDL2/bin
+	cd SDL2/bin && unzip ../zip/SDL2_lib_dll.zip
+
+build-linux:
 	@echo "$(BLUE)Create a build for linux$(NOC)"
 	@rm -rf build_linux
 	@mkdir build_linux
@@ -88,7 +92,7 @@ build-linux :
 	@cp -r data build_linux/data
 	@echo "$(GREEN)Done$(NOC)"
 
-build-windows :
+build-windows:
 	@echo "$(BLUE)Create a build for windows$(NOC)"
 	@rm -rf build_windows
 	@mkdir build_windows
@@ -107,4 +111,4 @@ build-windows :
 	@cp SDL2/bin/SDL2_ttf.dll build_windows/bin/SDL2_ttf.dll
 	@echo "$(GREEN)Done$(NOC)"
 
-.PHONY: clean fclean re run build-linux build-windows
+.PHONY: clean fclean re run config build-linux build-windows

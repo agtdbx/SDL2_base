@@ -4,8 +4,8 @@ De base le projet inclu SDL2_image, SDL2_mixer et SDL2_ttf
 
 ## Configuration
 ```
-sudo apt install make g++ mingw-w64 git-lfs
-git lfs install
+sudo apt install make g++ mingw-w64 unzip
+make config
 ```
 *Cela va installer make, g++, mingw-32 et git-lfs qui sont nécessaire au fonctionnement du projet*
 
