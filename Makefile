@@ -12,7 +12,7 @@ SDL_FLAGS			:=	-LSDL2 -lSDL2main -lSDL2 -lSDL2_image \
 						-lSDL2_mixer -lSDL2_ttf
 SDL_FLAGS_WINDOWS	:=	-LSDL2/lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer \
 						-lSDL2_ttf
-INCLUDE				:=	-I include/
+INCLUDE				:=	-I SDL2/include -I include/
 
 ifdef DEBUG
 CFLAGS	+=	-g
@@ -134,12 +134,8 @@ re: fclean
 
 run: $(BIN_DIR)/$(NAME)
 	@echo "$(BLUE)Launch game$(NOC)"
-	@cd $(BIN_DIR); ./$(NAME)
+	$(shell cd $(BIN_DIR); ./$(NAME))
 	@echo "$(GREEN)Have a nice day :)$(NOC)"
-
-config:
-	mkdir -p SDL2/bin
-	cd SDL2/bin && unzip ../zip/SDL2_lib_dll.zip
 
 build-linux:
 	@echo "$(BLUE)Create a build for linux$(NOC)"
@@ -189,6 +185,6 @@ create_script:
 	@gcc .progress_bar.c -o .progress_bar
 	@rm -rf .progress_bar.c
 
-.PHONY: all clean fclean re run config build-linux build-windows create_script
+.PHONY: all clean fclean re run build-linux build-windows create_script
 
 -include $(DEPS)
