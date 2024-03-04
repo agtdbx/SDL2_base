@@ -21,9 +21,14 @@ Le projet est séparant en plus fichiers :
 ## Makefile
 Un Makefile pour compiler un projet en C++ est déjà présent.
 
-Vous pouvez changer le nom de l'éxécutable en modifiant la variable **NAME** ligne 19 du Makefile
+Vous pouvez changer le nom de l'éxécutable en modifiant la variable **NAME** ligne 22 du Makefile
 
-Vous devez rajouter vos fichiers sources à la variable **SRCS** ligne 24 du Makefile
+Vous devez rajouter vos fichiers sources à la variable **SRCS** ligne 28 du Makefile
+
+Vous pouvez changer l'affichage en modifiant la variable **DISPLAY** ligne 36.
+En mettant ***PERCENTAGE*** vous aurez un pourcentage
+En mettant ***PROGRESS_BAR*** vous aurez une barre de progression
+Pour tous autre valeur vous aurez un compteur
 
 Pour compiler, tapez
 ```
