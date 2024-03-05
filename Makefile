@@ -94,7 +94,7 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp | $$(@D)
 	fi;
 	$(eval PERCENT=$(shell expr $(NB_COMPILE)00 / $(TO_COMPILE)))
 	@./.progress_bar $(PERCENT)
-	@echo " - $(PURPLE)Compiling $<"
+	@echo " - $(PURPLE)Compiling $<$(NOC)"
 	@$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 	@if [ $(NB_COMPILE) -eq $(TO_COMPILE) ];\
 		then echo "$(BLUE)Compilation done$(NOC)";\
