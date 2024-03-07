@@ -13,6 +13,7 @@ The projet is split in many subfolders :
  - .build -> This is the subfolder for .o and .d from compiling project
  - bin -> There is the place for the executable
  - data -> Here you can put every data required by your projet
+ - log -> The log of the previous execution will be here
  - include -> This is the headers (.h/.hpp) subfolders
  - SDL2 -> SDL2 libs folder
  - srcs -> This is the place for your sources files (.cpp)

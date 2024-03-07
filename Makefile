@@ -134,7 +134,8 @@ re: fclean
 
 run: $(BIN_DIR)/$(NAME)
 	@echo "$(BLUE)Launch game$(NOC)"
-	$(shell cd $(BIN_DIR); ./$(NAME))
+	@mkdir -p log
+	$(shell cd $(BIN_DIR); ./$(NAME) 1>../log/standard.log 2>../log/error.log)
 	@echo "$(GREEN)Have a nice day :)$(NOC)"
 
 build:
