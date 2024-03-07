@@ -117,7 +117,7 @@ endif
 
 $(BIN_DIR)/$(NAME): $(OBJS)
 	@rm -rf .progress_bar
-	@mkdir -p $(BIN_DIR)
+	@mkdir -p $(BIN_DIR) log
 	@$(CC) -o $@ $^ $(SDL_FLAGS)
 	@echo "$(GREEN)Linking complete$(NOC)"
 
@@ -134,7 +134,6 @@ re: fclean
 
 run: $(BIN_DIR)/$(NAME)
 	@echo "$(BLUE)Launch game$(NOC)"
-	@mkdir -p log
 	$(shell cd $(BIN_DIR); ./$(NAME) 1>../log/standard.log 2>../log/error.log)
 	@echo "$(GREEN)Have a nice day :)$(NOC)"
 
