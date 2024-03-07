@@ -1,5 +1,4 @@
 /bin
-.build
-build_linux
-build_windows
+/.build
+/build*
 .vscode

@@ -137,6 +137,47 @@ run: $(BIN_DIR)/$(NAME)
 	$(shell cd $(BIN_DIR); ./$(NAME))
 	@echo "$(GREEN)Have a nice day :)$(NOC)"
 
+build:
+	@echo "$(BLUE)Create a complete build$(NOC)"
+	@rm -rf build_global
+	@mkdir build_global
+
+	@echo "$(BLUE)Create a build for linux$(NOC)"
+	@mkdir build_global/build_linux
+	@mkdir build_global/build_linux/bin
+	@echo "./bin/$(NAME)" > build_global/build_linux/run_game.sh
+	@chmod 744 build_global/build_linux/run_game.sh
+	@echo "$(PURPLE)Compiling...$(NOC)"
+	@$(CC) -o build_global/build_linux/bin/$(NAME) $(INCLUDE)\
+		$(SRCS) $(SDL_FLAGS)
+	@cp -r data build_global/build_linux/data
+	@echo "$(GREEN)Linux build done$(NOC)"
+
+	@echo "$(BLUE)Create a build for windows$(NOC)"
+	@mkdir build_global/build_windows
+	@mkdir build_global/build_windows/bin
+	@echo "@echo off" > build_global/build_windows/run_game.bat
+	@echo "title Run game" >> build_global/build_windows/run_game.bat
+	@echo "cd bin" >> build_global/build_windows/run_game.bat
+	@echo "$(NAME).exe" >> build_global/build_windows/run_game.bat
+	@echo "$(PURPLE)Compiling...$(NOC)"
+	@x86_64-w64-mingw32-g++ -o build_global/build_windows/bin/$(NAME).exe \
+		$(INCLUDE) $(SRCS) -lmingw32 $(SDL_FLAGS_WINDOWS)
+	@cp -r data build_global/build_windows/data
+	@cp SDL2/bin/SDL2.dll build_global/build_windows/bin/SDL2.dll
+	@cp SDL2/bin/SDL2_image.dll build_global/build_windows/bin/SDL2_image.dll
+	@cp SDL2/bin/SDL2_mixer.dll build_global/build_windows/bin/SDL2_mixer.dll
+	@cp SDL2/bin/SDL2_ttf.dll build_global/build_windows/bin/SDL2_ttf.dll
+	@echo "$(GREEN)Windows build done$(NOC)"
+
+	@echo "$(BLUE)Create compressed versions$(NOC)"
+	@tar -czvf build_global/build_linux.tar.gz build_global/build_linux 1>/dev/null
+	@tar -czvf build_global/build_windows.tar.gz build_global/build_windows 1>/dev/null
+	@zip -r build_global/build_linux.zip build_global/build_linux 1>/dev/null
+	@zip -r build_global/build_windows.zip build_global/build_windows 1>/dev/null
+	@echo "$(GREEN)Complete build done$(NOC)"
+
+
 build-linux:
 	@echo "$(BLUE)Create a build for linux$(NOC)"
 	@rm -rf build_linux
@@ -145,7 +186,7 @@ build-linux:
 	@echo "./bin/$(NAME)" > build_linux/run_game.sh
 	@chmod 744 build_linux/run_game.sh
 	@echo "$(PURPLE)Compiling...$(NOC)"
-	@$(CC) $(CFLAGS) -o build_linux/bin/$(NAME) $(INCLUDE) $(SRCS) $(SDL_FLAGS)
+	@$(CC) -o build_linux/bin/$(NAME) $(INCLUDE) $(SRCS) $(SDL_FLAGS)
 	@cp -r data build_linux/data
 	@echo "$(GREEN)Done$(NOC)"
 
@@ -159,7 +200,7 @@ build-windows:
 	@echo "cd bin" >> build_windows/run_game.bat
 	@echo "$(NAME).exe" >> build_windows/run_game.bat
 	@echo "$(PURPLE)Compiling...$(NOC)"
-	@x86_64-w64-mingw32-g++ $(CFLAGS) -o build_windows/bin/$(NAME).exe \
+	@x86_64-w64-mingw32-g++ -o build_windows/bin/$(NAME).exe \
 		$(INCLUDE) $(SRCS) -lmingw32 $(SDL_FLAGS_WINDOWS)
 	@cp -r data build_windows/data
 	@cp SDL2/bin/SDL2.dll build_windows/bin/SDL2.dll
@@ -185,6 +226,6 @@ create_script:
 	@gcc .progress_bar.c -o .progress_bar
 	@rm -rf .progress_bar.c
 
-.PHONY: all clean fclean re run build-linux build-windows create_script
+.PHONY: all clean fclean re run build build-linux build-windows create_script
 
 -include $(DEPS)
