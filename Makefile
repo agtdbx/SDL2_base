@@ -8,11 +8,11 @@ MAKEFLAGS		:=	--no-print-directory
 #=================================COMPILATION==================================#
 CC					:=	g++
 CFLAGS				:=	-MP -MMD
-SDL_FLAGS			:=	-LSDL2 -lSDL2main -lSDL2 -lSDL2_image \
+LIBS_FLAGS			:=	-Llib/SDL2 -lSDL2main -lSDL2 -lSDL2_image \
 						-lSDL2_mixer -lSDL2_ttf
-SDL_FLAGS_WINDOWS	:=	-LSDL2/lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer \
+LIBS_FLAGS_WINDOWS	:=	-Llib/SDL2/lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer \
 						-lSDL2_ttf
-INCLUDE				:=	-I SDL2/include -I include/
+INCLUDE				:=	-I lib/SDL2/include -I include/
 
 ifdef DEBUG
 CFLAGS	+=	-g
@@ -118,7 +118,7 @@ endif
 $(BIN_DIR)/$(NAME): $(OBJS)
 	@rm -rf .progress_bar
 	@mkdir -p $(BIN_DIR) log
-	@$(CC) -o $@ $^ $(SDL_FLAGS)
+	@$(CC) -o $@ $^ $(LIBS_FLAGS)
 	@echo "$(GREEN)Linking complete$(NOC)"
 
 clean:
@@ -149,7 +149,7 @@ build:
 	@chmod 744 build_global/build_linux/run_game.sh
 	@echo "$(PURPLE)Compiling...$(NOC)"
 	@$(CC) -o build_global/build_linux/bin/$(NAME) $(INCLUDE)\
-		$(SRCS) $(SDL_FLAGS)
+		$(SRCS) $(LIBS_FLAGS)
 	@cp -r data build_global/build_linux/data
 	@echo "$(GREEN)Linux build done$(NOC)"
 
@@ -162,12 +162,12 @@ build:
 	@echo "$(NAME).exe" >> build_global/build_windows/run_game.bat
 	@echo "$(PURPLE)Compiling...$(NOC)"
 	@x86_64-w64-mingw32-g++ -o build_global/build_windows/bin/$(NAME).exe \
-		$(INCLUDE) $(SRCS) -lmingw32 $(SDL_FLAGS_WINDOWS)
+		$(INCLUDE) $(SRCS) -lmingw32 $(LIBS_FLAGS_WINDOWS)
 	@cp -r data build_global/build_windows/data
-	@cp SDL2/bin/SDL2.dll build_global/build_windows/bin/SDL2.dll
-	@cp SDL2/bin/SDL2_image.dll build_global/build_windows/bin/SDL2_image.dll
-	@cp SDL2/bin/SDL2_mixer.dll build_global/build_windows/bin/SDL2_mixer.dll
-	@cp SDL2/bin/SDL2_ttf.dll build_global/build_windows/bin/SDL2_ttf.dll
+	@cp lib/SDL2/bin/SDL2.dll build_global/build_windows/bin/SDL2.dll
+	@cp lib/SDL2/bin/SDL2_image.dll build_global/build_windows/bin/SDL2_image.dll
+	@cp lib/SDL2/bin/SDL2_mixer.dll build_global/build_windows/bin/SDL2_mixer.dll
+	@cp lib/SDL2/bin/SDL2_ttf.dll build_global/build_windows/bin/SDL2_ttf.dll
 	@echo "$(GREEN)Windows build done$(NOC)"
 
 	@echo "$(BLUE)Create compressed versions$(NOC)"
@@ -186,7 +186,7 @@ build-linux:
 	@echo "./bin/$(NAME)" > build_linux/run_game.sh
 	@chmod 744 build_linux/run_game.sh
 	@echo "$(PURPLE)Compiling...$(NOC)"
-	@$(CC) -o build_linux/bin/$(NAME) $(INCLUDE) $(SRCS) $(SDL_FLAGS)
+	@$(CC) -o build_linux/bin/$(NAME) $(INCLUDE) $(SRCS) $(LIBS_FLAGS)
 	@cp -r data build_linux/data
 	@echo "$(GREEN)Done$(NOC)"
 
@@ -201,12 +201,12 @@ build-windows:
 	@echo "$(NAME).exe" >> build_windows/run_game.bat
 	@echo "$(PURPLE)Compiling...$(NOC)"
 	@x86_64-w64-mingw32-g++ -o build_windows/bin/$(NAME).exe \
-		$(INCLUDE) $(SRCS) -lmingw32 $(SDL_FLAGS_WINDOWS)
+		$(INCLUDE) $(SRCS) -lmingw32 $(LIBS_FLAGS_WINDOWS)
 	@cp -r data build_windows/data
-	@cp SDL2/bin/SDL2.dll build_windows/bin/SDL2.dll
-	@cp SDL2/bin/SDL2_image.dll build_windows/bin/SDL2_image.dll
-	@cp SDL2/bin/SDL2_mixer.dll build_windows/bin/SDL2_mixer.dll
-	@cp SDL2/bin/SDL2_ttf.dll build_windows/bin/SDL2_ttf.dll
+	@cp lib/SDL2/bin/SDL2.dll build_windows/bin/SDL2.dll
+	@cp lib/SDL2/bin/SDL2_image.dll build_windows/bin/SDL2_image.dll
+	@cp lib/SDL2/bin/SDL2_mixer.dll build_windows/bin/SDL2_mixer.dll
+	@cp lib/SDL2/bin/SDL2_ttf.dll build_windows/bin/SDL2_ttf.dll
 	@echo "$(GREEN)Done$(NOC)"
 
 create_script:

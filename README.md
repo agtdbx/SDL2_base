@@ -15,7 +15,7 @@ The projet is split in many subfolders :
  - data -> Here you can put every data required by your projet
  - log -> The log of the previous execution will be here
  - include -> This is the headers (.h/.hpp) subfolders
- - SDL2 -> SDL2 libs folder
+ - lib -> libs folder (already contains SDL2)
  - srcs -> This is the place for your sources files (.cpp)
 
 ## Makefile
@@ -25,7 +25,7 @@ You can change the executable name by change the value or the variable **NAME** 
 
 You can add your sources files at the variable **SRCS** line 28
 
-You can change the display of compilation by change **DISPLAY** value at line 36;
+You can change the display of compilation by change **DISPLAY** value at line 37
 With a value of ***PERCENTAGE*** you will have a percentage
 With ***PROGRESS_BAR*** a value, you will have a progress bar
 For any other value, you will have a counter
