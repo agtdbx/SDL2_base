@@ -8,7 +8,7 @@ MAKEFLAGS		:=	--no-print-directory
 #=================================COMPILATION==================================#
 CC					:=	g++
 CFLAGS				:=	-MP -MMD
-LIBS_FLAGS			:=	-Llib/SDL2 -lSDL2main -lSDL2 -lSDL2_image \
+LIBS_FLAGS			:=	-lSDL2main -lSDL2 -lSDL2_image \
 						-lSDL2_mixer -lSDL2_ttf
 LIBS_FLAGS_WINDOWS	:=	-Llib/SDL2/lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer \
 						-lSDL2_ttf
@@ -62,8 +62,10 @@ WHITE		:=	\033[0;37m
 #=====================================RULES====================================#
 all: $(BIN_DIR)/$(NAME)
 
+
 $(DIRS):
 	@mkdir -p $@
+
 
 ifeq ($(DISPLAY), PERCENTAGE)
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp | $$(@D)
@@ -115,27 +117,33 @@ $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cpp | $$(@D)
 
 endif
 
+
 $(BIN_DIR)/$(NAME): $(OBJS)
 	@rm -rf .progress_bar
 	@mkdir -p $(BIN_DIR) log
-	@$(CC) -o $@ $^ $(LIBS_FLAGS)
+	@$(CC) $^ $(LIBS_FLAGS) -o $@
 	@echo "$(GREEN)Linking complete$(NOC)"
+
 
 clean:
 	@echo "$(RED)Delete objects$(NOC)"
 	@rm -rf $(BUILD_DIR)
 
+
 fclean: clean
 	@echo "$(RED)Delete binary$(NOC)"
 	@rm -f $(BIN_DIR)/$(NAME)
 
+
 re: fclean
 	@make
+
 
 run: $(BIN_DIR)/$(NAME)
 	@echo "$(BLUE)Launch game$(NOC)"
 	$(shell cd $(BIN_DIR); ./$(NAME) 1>../log/standard.log 2>../log/error.log)
 	@echo "$(GREEN)Have a nice day :)$(NOC)"
+
 
 build:
 	@echo "$(BLUE)Create a complete build$(NOC)"
@@ -190,6 +198,7 @@ build-linux:
 	@cp -r data build_linux/data
 	@echo "$(GREEN)Done$(NOC)"
 
+
 build-windows:
 	@echo "$(BLUE)Create a build for windows$(NOC)"
 	@rm -rf build_windows
@@ -209,6 +218,7 @@ build-windows:
 	@cp lib/SDL2/bin/SDL2_ttf.dll build_windows/bin/SDL2_ttf.dll
 	@echo "$(GREEN)Done$(NOC)"
 
+
 create_script:
 	@echo '#include <unistd.h>' > .progress_bar.c
 	@echo '#include <stdlib.h>' >> .progress_bar.c
@@ -225,6 +235,7 @@ create_script:
 	@echo '}' >> .progress_bar.c
 	@gcc .progress_bar.c -o .progress_bar
 	@rm -rf .progress_bar.c
+
 
 .PHONY: all clean fclean re run build build-linux build-windows create_script
 

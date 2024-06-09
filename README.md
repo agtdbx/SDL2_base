@@ -7,6 +7,10 @@ This base contains SDL2_image, SDL2_mixer and SDL2_ttf
 sudo apt install make g++ mingw-w64 zip
 ```
 *This will install make, g++, mingw-32 and zip which are required for the projet*
+```
+sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+```
+*This will install SDL2 and it's componnent which are required for the projet*
 
 ## Environement
 The projet is split in many subfolders :
